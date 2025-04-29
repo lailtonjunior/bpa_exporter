@@ -1,2 +1,21 @@
-psycopg2-binary>=2.9.5
-PySimpleGUI>=4.75.0  # Nova versão ou a versão recomendada pelo servidor privado
+# Framework FastAPI e servidor ASGI
+fastapi==0.109.0
+uvicorn==0.25.0
+
+# Suporte para PostgreSQL
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+
+# Processamento de dados e exportação
+pandas==2.1.4
+openpyxl==3.1.2
+xlsxwriter==3.1.9
+
+# Utilitários
+python-dotenv==1.0.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Logging
+loguru==0.7.2

@@ -1,0 +1,190 @@
+2025-04-29 15:11:45,134 - app.database.connection - ERROR - Erro ao refletir tabela ficha_amb_int: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:11:45,135 - __main__ - ERROR - Erro ao exportar para XLSX: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:12:01,262 - app.database.connection - ERROR - Erro ao refletir tabela ficha_amb_int: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:12:01,264 - __main__ - ERROR - Erro ao exportar para BPA-I: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:13:25,278 - app.database.connection - ERROR - Erro ao refletir tabela ficha_amb_int: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:13:25,279 - __main__ - ERROR - Erro ao exportar para BPA-I: Could not reflect: requested table(s) not available in Engine(postgresql://postgres:***@localhost:5432/bd0553): (ficha_amb_int)
+2025-04-29 15:15:54,460 - __main__ - INFO - Iniciando exportação para BPA-I. Competência: 202504
+2025-04-29 15:15:54,477 - app.services.data_service - ERROR - Erro ao obter registros: (psycopg2.errors.UndefinedColumn) ERRO:  coluna f.cod_cid não existe
+LINE 11:                 f.cod_cid AS cid,
+                         ^
+
+[SQL: 
+            SELECT 
+                f.id_fia AS numero,
+                f.cod_paciente,
+                f.cod_convenio,
+                f.cod_tp_sus,
+                f.cod_grupo_sus,
+                f.cod_esp_sus,
+                f.data_atendimento,
+                f.cod_especialidade,
+                f.cod_cid AS cid,
+                f.cod_hospital AS cnes,
+                f.urgente_eletivo,
+                f.tipo_atend,
+                f.matricula AS cns_paciente,
+                f.cod_medico,
+                p.cns AS cns_profissional,
+                p.cbo,
+                l.id_lancamento,
+                l.cod_proc AS procedimento,
+                l.quantidade,
+                l.cod_cbo,
+                l.tipo_operacao,
+                l.carater_atendimento,
+                l.data,
+                EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') AS competencia
+            FROM 
+                sigh.ficha_amb_int f
+            JOIN 
+                sigh.lancamentos l ON f.id_fia = l.cod_conta
+            LEFT JOIN 
+                sigh.prestadores p ON f.cod_medico = p.id_prestador
+            WHERE
+                l.ativo = true
+                AND f.ativo = true
+             AND EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') = %(competencia)s ORDER BY f.id_fia, l.id_lancamento]
+[parameters: {'competencia': '202504'}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+2025-04-29 15:15:54,477 - __main__ - ERROR - Erro ao exportar para BPA-I: (psycopg2.errors.UndefinedColumn) ERRO:  coluna f.cod_cid não existe
+LINE 11:                 f.cod_cid AS cid,
+                         ^
+
+[SQL: 
+            SELECT 
+                f.id_fia AS numero,
+                f.cod_paciente,
+                f.cod_convenio,
+                f.cod_tp_sus,
+                f.cod_grupo_sus,
+                f.cod_esp_sus,
+                f.data_atendimento,
+                f.cod_especialidade,
+                f.cod_cid AS cid,
+                f.cod_hospital AS cnes,
+                f.urgente_eletivo,
+                f.tipo_atend,
+                f.matricula AS cns_paciente,
+                f.cod_medico,
+                p.cns AS cns_profissional,
+                p.cbo,
+                l.id_lancamento,
+                l.cod_proc AS procedimento,
+                l.quantidade,
+                l.cod_cbo,
+                l.tipo_operacao,
+                l.carater_atendimento,
+                l.data,
+                EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') AS competencia
+            FROM 
+                sigh.ficha_amb_int f
+            JOIN 
+                sigh.lancamentos l ON f.id_fia = l.cod_conta
+            LEFT JOIN 
+                sigh.prestadores p ON f.cod_medico = p.id_prestador
+            WHERE
+                l.ativo = true
+                AND f.ativo = true
+             AND EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') = %(competencia)s ORDER BY f.id_fia, l.id_lancamento]
+[parameters: {'competencia': '202504'}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+2025-04-29 15:54:03,981 - __main__ - INFO - Iniciando exportação para BPA-I. Competência: 202504
+2025-04-29 15:54:03,998 - app.services.data_service - ERROR - Erro ao obter registros: (psycopg2.errors.UndefinedColumn) ERRO:  coluna l.carater_atendimento não existe
+LINE 25:                 COALESCE(l.carater_atendimento, '1') AS cara...
+                                  ^
+
+[SQL: 
+            SELECT 
+                f.id_fia AS numero,
+                f.cod_paciente,
+                f.cod_convenio,
+                f.cod_tp_sus,
+                f.cod_grupo_sus,
+                f.cod_esp_sus,
+                f.data_atendimento,
+                f.cod_especialidade,
+                l.cod_cid AS cid,        -- Usamos cod_cid da tabela lancamentos
+                f.cod_hospital AS cnes,
+                f.urgente_eletivo,
+                f.tipo_atend,
+                f.matricula AS cns_paciente,
+                f.cod_medico,
+                -- Não temos acesso direto ao CNS do profissional, então deixamos NULL
+                NULL AS cns_profissional,
+                l.cod_cbo AS cbo,        -- Usamos cod_cbo da tabela lancamentos
+                l.id_lancamento,
+                l.cod_proc AS procedimento,
+                l.quantidade,
+                l.cod_cbo,
+                l.tipo_operacao,
+                COALESCE(l.carater_atendimento, '1') AS carater_atendimento,
+                l.data,
+                EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') AS competencia
+            FROM 
+                sigh.ficha_amb_int f
+            JOIN 
+                sigh.lancamentos l ON f.id_fia = l.cod_conta
+            WHERE
+                l.ativo = true
+                AND f.ativo = true
+             AND EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') = %(competencia)s ORDER BY f.id_fia, l.id_lancamento]
+[parameters: {'competencia': '202504'}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+2025-04-29 15:54:03,998 - __main__ - ERROR - Erro ao exportar para BPA-I: (psycopg2.errors.UndefinedColumn) ERRO:  coluna l.carater_atendimento não existe
+LINE 25:                 COALESCE(l.carater_atendimento, '1') AS cara...
+                                  ^
+
+[SQL: 
+            SELECT 
+                f.id_fia AS numero,
+                f.cod_paciente,
+                f.cod_convenio,
+                f.cod_tp_sus,
+                f.cod_grupo_sus,
+                f.cod_esp_sus,
+                f.data_atendimento,
+                f.cod_especialidade,
+                l.cod_cid AS cid,        -- Usamos cod_cid da tabela lancamentos
+                f.cod_hospital AS cnes,
+                f.urgente_eletivo,
+                f.tipo_atend,
+                f.matricula AS cns_paciente,
+                f.cod_medico,
+                -- Não temos acesso direto ao CNS do profissional, então deixamos NULL
+                NULL AS cns_profissional,
+                l.cod_cbo AS cbo,        -- Usamos cod_cbo da tabela lancamentos
+                l.id_lancamento,
+                l.cod_proc AS procedimento,
+                l.quantidade,
+                l.cod_cbo,
+                l.tipo_operacao,
+                COALESCE(l.carater_atendimento, '1') AS carater_atendimento,
+                l.data,
+                EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') AS competencia
+            FROM 
+                sigh.ficha_amb_int f
+            JOIN 
+                sigh.lancamentos l ON f.id_fia = l.cod_conta
+            WHERE
+                l.ativo = true
+                AND f.ativo = true
+             AND EXTRACT(YEAR FROM f.data_atendimento) || LPAD(EXTRACT(MONTH FROM f.data_atendimento)::text, 2, '0') = %(competencia)s ORDER BY f.id_fia, l.id_lancamento]
+[parameters: {'competencia': '202504'}]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+2025-04-29 16:14:29,475 - __main__ - INFO - Iniciando exportação para BPA-I. Competência: 202504
+2025-04-29 16:14:31,913 - app.services.data_service - INFO - Encontrados 12916 registros para exportação
+2025-04-29 16:14:32,007 - app.services.bpa_service - INFO - Arquivo BPA-I gerado com sucesso: BPA_I_2560372_202504.txt
+2025-04-29 16:14:32,007 - __main__ - INFO - Exportação para BPA-I concluída: BPA_I_2560372_202504.txt
+2025-04-29 17:11:11,281 - __mp_main__ - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:11:11,340 - main - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:12:43,921 - __main__ - INFO - Iniciando exportação para BPA-I. Competência: 202504
+2025-04-29 17:12:47,662 - app.services.data_service - INFO - Encontrados 12916 registros para exportação
+2025-04-29 17:12:47,783 - app.services.bpa_service - INFO - Arquivo BPA-I gerado com sucesso: BPA_I_2560372_202504.txt
+2025-04-29 17:12:47,783 - __main__ - INFO - Exportação para BPA-I concluída: BPA_I_2560372_202504.txt
+2025-04-29 17:21:32,008 - __mp_main__ - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:21:32,126 - main - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:21:58,382 - __mp_main__ - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:21:58,490 - main - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:22:15,041 - __mp_main__ - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
+2025-04-29 17:22:15,116 - main - WARNING - Frontend não encontrado: Directory 'frontend/dist' does not exist
